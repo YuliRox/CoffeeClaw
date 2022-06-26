@@ -62,7 +62,7 @@ var newTermine = termine.Except(storedTermine).ToArray();
 if (newTermine.Length <= 0)
 {
     Console.WriteLine("Nothing new :(");
-    //    return;
+    return;
 }
 
 await UpdateCacheFile(options.CacheFile, termine);
@@ -74,6 +74,8 @@ foreach (var newTermin in newTermine)
 
 
 var mimeMessage = CreateMessage(options.FromMailAddress, options.ToMailAddress, newTermine);
+
+await SendMail(options, mimeMessage);
 
 MimeMessage CreateMessage(string fromMail, string toMail, DateOnly[] termine)
 {
@@ -102,8 +104,6 @@ MimeMessage CreateMessage(string fromMail, string toMail, DateOnly[] termine)
     mimeMessage.Body = bodyBuilder.ToMessageBody();
     return mimeMessage;
 }
-
-await SendMail(options, mimeMessage);
 
 static async ValueTask<string> SendMail(ClawConfiguration options, MimeMessage mimeMessage)
 {
