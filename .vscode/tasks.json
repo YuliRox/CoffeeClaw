@@ -14,11 +14,15 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publish arm64",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
+                "-r", "ubuntu-arm64",
+                "-c", "Release",
+                "--self-contained",
+                "-p:PublishSingleFile=true",
                 "${workspaceFolder}/CoffeeClaw.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
